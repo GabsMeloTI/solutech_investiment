@@ -1,5 +1,6 @@
 import React from 'react';
-import { StatusBar, Image, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, Modal, TouchableOpacity  } from 'react-native';
+import { useState } from 'react';
 const logo = require('../../assets/logo.png');
 const imgNoticia = require('../../assets/exp-noticia.png');
 const instagram = require('../../assets/instagram.png');
@@ -8,6 +9,8 @@ const twitter = require('../../assets/twitterX.png');
 const rodape = require('../../assets/linha-rodape.png');
 
 export default function Home({ navigation }) {
+  const [modalVisible, setModalVisible] = useState(true);
+
   return (
     <View style={styles.container}>
 
@@ -90,6 +93,27 @@ export default function Home({ navigation }) {
             </View>
 
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTittle}>DESCUBRA O PODER DOS INVESTIMENTOS: SEU PRIMEIRO PASSO RUMO À PROSPERIDADE FINANCEIRA!</Text>
+            <Text style={styles.modalText}>Temos a solução perfeita para quem está começando a investir mas não sabe por onde começar. Siga para nossa tela de investidor inicial.</Text>
+            <TouchableOpacity style={styles.buttonClose}>
+              <Text style={styles.textStyle}>Começar minha jornada</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonClose} onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>Não possuo interesse</Text>
+            </TouchableOpacity>
+            <Text style={styles.modalRodape}>Seu dinheiro pode trabalhar por você! Com os investimentos certos, alcance seus objetivos financeiros e sonhos. Novato ou não, estamos aqui para ajudar. Faça uma simulação e comece a investir hoje!</Text>
+          </View>
+        </View>
+      </Modal>
       <StatusBar style="auto" />
     </View>
   );
@@ -150,6 +174,57 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#B9C7C5',
 
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#20515E",
+    paddingHorizontal: 35,
+    paddingVertical: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalText: {
+    textAlign: "center",
+    color: '#797777',
+    fontSize: 10,
+    marginBottom: '10%',
+  },
+  modalRodape: {
+    textAlign: "center",
+    color: '#797777',
+    fontSize: 10,
+  },
+  modalTittle: {
+    color: '#E4A96A',
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: 'center'
+  },
+  buttonClose: {
+    backgroundColor: "#E8E9E4",
+    borderRadius: 5,
+    width: 180,
+    padding: 10,
+    marginBottom: '8%',
+  },
+  textStyle: {
+    color: "#797777",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 12,
   },
   noticiaImagem: {
     width: '100%', 
