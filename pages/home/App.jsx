@@ -3,7 +3,7 @@ import { StatusBar, Image, StyleSheet, Text, View } from 'react-native';
 const logo = require('./assets/logo.png');
 const imgNoticia = require('./assets/exp-noticia.png');
 
-export default function App() {
+export default function Home() {
   return (
     <View style={styles.container}>
 
