@@ -97,6 +97,7 @@ export default function SingUp({ navigation }) {
               <TextInput
                 style={styles.input}
                 placeholder="Digite seu senha"
+                secureTextEntry={true}
                 value={usuario.senha}
                 onChangeText={(text) => handleChange('senha', text)}
               />
@@ -106,6 +107,7 @@ export default function SingUp({ navigation }) {
               <TextInput
                 style={styles.input}
                 placeholder="Confirme sua senha"
+                secureTextEntry={true}
                 value={confirmacao}
                 onChangeText={(text) => handleConfirmacao(text)}
               />
