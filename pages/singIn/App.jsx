@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 const logo = require('../../assets/logo.png');
 const rodape = require('../../assets/linha-rodape.png');
@@ -6,7 +7,23 @@ const instagram = require('../../assets/instagram.png');
 const facebook = require('../../assets/facebook.png');
 const twitter = require('../../assets/twitterX.png');
 
+
+const api = axios.create({
+  baseURL : "https://solutech-fiap-default-rtdb.firebaseio.com/"
+})
+
+
 export default function SingIn({ navigation }) {
+  const [usuario, setUsuario] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+  });
+
+  function logar() {
+    api.get('/usuarios.json').then((dataset))
+  }
+
   return (
     <View style={styles.container}>
 
