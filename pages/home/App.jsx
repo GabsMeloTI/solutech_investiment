@@ -19,7 +19,7 @@ export default function Home({ navigation }) {
           <Image source={logo} style={styles.logo}/>
         </View>
         <View style={styles.lista}>
-          <Text style={styles.topicos}>Notícias</Text>
+          <Text style={styles.topicos} onPress={() => {navigation.navigate('Home');}}>Notícias</Text>
           <Text style={styles.topicos}>Moedas</Text>
           <Text style={styles.topicos}>Cálculos</Text>
           <Text style={styles.topicos}>Sobre nós</Text>
@@ -104,7 +104,7 @@ export default function Home({ navigation }) {
           <View style={styles.modalView}>
             <Text style={styles.modalTittle}>DESCUBRA O PODER DOS INVESTIMENTOS: SEU PRIMEIRO PASSO RUMO À PROSPERIDADE FINANCEIRA!</Text>
             <Text style={styles.modalText}>Temos a solução perfeita para quem está começando a investir mas não sabe por onde começar. Siga para nossa tela de investidor inicial.</Text>
-            <TouchableOpacity style={styles.buttonClose}>
+            <TouchableOpacity style={styles.buttonClose} onPress={() => {navigation.navigate('InvestmentForm'); setModalVisible(!modalVisible)}}>
               <Text style={styles.textStyle}>Começar minha jornada</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonClose} onPress={() => setModalVisible(!modalVisible)}>
