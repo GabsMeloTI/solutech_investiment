@@ -20,7 +20,7 @@ export default function Home({ navigation }) {
         </View>
         <View style={styles.lista}>
           <Text style={styles.topicos} onPress={() => {navigation.navigate('Home');}}>Notícias</Text>
-          <Text style={styles.topicos}>Moedas</Text>
+          <Text style={styles.topicos} onPress={() => {navigation.navigate('Moeda');}}>Moedas</Text>
           <Text style={styles.topicos}>Cálculos</Text>
           <Text style={styles.topicos}>Sobre nós</Text>
           <Text style={styles.topicos} onPress={() => {navigation.navigate('SingIn');}}>Entrar</Text>
