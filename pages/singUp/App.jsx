@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 const logo = require('../../assets/logo.png');
 const rodape = require('../../assets/linha-rodape.png');
@@ -6,112 +7,153 @@ const instagram = require('../../assets/instagram.png');
 const facebook = require('../../assets/facebook.png');
 const twitter = require('../../assets/twitterX.png');
 
+const api = axios.create({
+  baseURL: "https://solutech-fiap-default-rtdb.firebaseio.com/"
+});
+
 export default function SingUp({ navigation }) {
+  const [usuario, setUsuario] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+  });
+  const [confirmacao, setConfirmacao] = useState("");
+
+  function cadastrar(usuario) {
+    api.post('/usuarios.json', usuario).then(alert("Cadastrado com sucesso! Seja bem-vindo " + usuario.nome)).catch((err) => {alert("Erro! " + err)});
+    navigation.navigate('Home');
+    console.log(usuario);
+  }
+
+  const handleChange = (name, value) => {
+    setUsuario({
+      ...usuario,
+      [name]: value
+    });
+  };
+
+  const handleConfirmacao = (value) => {
+    setConfirmacao(value);
+  };
+
+  const handleSignUp = () => {
+    if (usuario.senha === confirmacao) {
+      cadastrar(usuario);
+    } else {
+      alert("As senhas não conferem! Tente novamente");
+    }
+  };
+
   return (
     <View style={styles.container}>
-
       <View style={styles.menu}>
         <View>
-          <Image source={logo} style={styles.logo}/>
+          <Image source={logo} style={styles.logo} />
         </View>
         <View style={styles.lista}>
-        <Text style={styles.topicos} onPress={() => {navigation.navigate('Home');}}>Notícias</Text>
+          <Text style={styles.topicos} onPress={() => { navigation.navigate('Home'); }}>Notícias</Text>
           <Text style={styles.topicos}>Moedas</Text>
           <Text style={styles.topicos}>Cálculos</Text>
           <Text style={styles.topicos}>Sobre nós</Text>
-          <Text style={styles.topicos} onPress={() => {navigation.navigate('SingIn');}}>Entrar</Text>
+          <Text style={styles.topicos} onPress={() => { navigation.navigate('SingIn'); }}>Entrar</Text>
         </View>
       </View>
 
       <View style={styles.conteudo}>
-        <View  style={styles.conteudoTitle}>
+        <View style={styles.conteudoTitle}>
           <Text style={styles.titulo}>Cadastro</Text>
           <Text style={styles.subtitulo}>Você já tem conta em nossa plataforma?</Text>
-          <Text style={styles.subtitulo}>Não perca tempo e  
-            <Text style={styles.span} onPress={() => {navigation.navigate('SingIn');}}> entre </Text>
-          para ficar por dentro do mundo dos investimentos. </Text>
+          <Text style={styles.subtitulo}>Não perca tempo e
+            <Text style={styles.span} onPress={() => { navigation.navigate('SingIn'); }}> entre </Text>
+            para ficar por dentro do mundo dos investimentos. </Text>
         </View>
 
         <View style={styles.conteudoInput}>
-            <View style={styles.conteudoTitle}>
-                <Text style={styles.titleInput}>BEM-VINDO À SOLUTECH FINANCE!</Text>
-                <Text style={styles.desInput}>Aqui, você encontrará tudo que precisa para começar sua jornada rumo ao sucesso financeiro. Explore nossos recursos e esteja pronto para investir no seu futuro. Estamos aqui para ajudá-lo a cada passo do caminho. Boa sorte e bons investimentos!</Text>
+          <View style={styles.conteudoTitle}>
+            <Text style={styles.titleInput}>BEM-VINDO À SOLUTECH FINANCE!</Text>
+            <Text style={styles.desInput}>Aqui, você encontrará tudo que precisa para começar sua jornada rumo ao sucesso financeiro. Explore nossos recursos e esteja pronto para investir no seu futuro. Estamos aqui para ajudá-lo a cada passo do caminho. Boa sorte e bons investimentos!</Text>
+          </View>
+          <View>
+            <View>
+              <Text style={styles.desInput}>Nome:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite seu nome"
+                value={usuario.nome}
+                onChangeText={(text) => handleChange('nome', text)}
+              />
             </View>
             <View>
-                <View>
-                    <Text style={styles.desInput}>Nome:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite seu nome"
-                    />
-                </View>
-                <View>
-                    <Text style={styles.desInput}>Email:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite seu email"
-                    />
-                </View>
-                <View>
-                    <Text style={styles.desInput}>Senha:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite seu senha"
-                    />
-                </View>
-                <View>
-                    <Text style={styles.desInput}>Confirme sua senha:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Confirme sua senha"
-                    />
-                </View>
-                <TouchableOpacity style={styles.botao}>
-                    <Text style={styles.textoBotao}>Cadastre-se</Text>
-                </TouchableOpacity>
-
+              <Text style={styles.desInput}>Email:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite seu email"
+                value={usuario.email}
+                onChangeText={(text) => handleChange('email', text)}
+              />
             </View>
+            <View>
+              <Text style={styles.desInput}>Senha:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite seu senha"
+                value={usuario.senha}
+                onChangeText={(text) => handleChange('senha', text)}
+              />
+            </View>
+            <View>
+              <Text style={styles.desInput}>Confirme sua senha:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirme sua senha"
+                value={confirmacao}
+                onChangeText={(text) => handleConfirmacao(text)}
+              />
+            </View>
+            <TouchableOpacity style={styles.botao} onPress={handleSignUp}>
+              <Text style={styles.textoBotao}>Cadastre-se</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-            <View style={styles.rodape}>
-                <View>
-                    <Image source={rodape} style={styles.linhaRodape}/>
-                </View>
-                
-                <View style={styles.conteudoRodape}>
-                    <View>
-                        <Text style={styles.textRodape}>Investir no mercado financeiro apresenta desafios, desde entender os produtos até gerenciar riscos. É crucial compreender as dificuldades dos investidores para melhorar suas experiências e resultados.</Text>
-                    </View>
-                    <View>
-                        <View>
-                            <Text style={styles.textRedes}>Nossas Redes Sociais:</Text>
-                        </View>
-                        <View>
-                            <View style={styles.imageRedes}>
-                                <Image source={facebook} style={styles.imgRodape}/>
-                                <Text style={styles.textRedes}>Solutech Investments</Text>
-                            </View>
-                            <View style={styles.imageRedes}>
-                                <Image source={instagram} style={styles.imgRodape}/>
-                                <Text style={styles.textRedes}>Solutech</Text>
-                            </View>
-                            <View style={styles.imageRedes}>
-                                <Image source={twitter} style={styles.imgRodape}/>
-                                <Text style={styles.textRedes}>solutech_investments</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            
+        <View style={styles.rodape}>
+          <View>
+            <Image source={rodape} style={styles.linhaRodape} />
+          </View>
 
+          <View style={styles.conteudoRodape}>
+            <View>
+              <Text style={styles.textRodape}>Investir no mercado financeiro apresenta desafios, desde entender os produtos até gerenciar riscos. É crucial compreender as dificuldades dos investidores para melhorar suas experiências e resultados.</Text>
+            </View>
+            <View>
+              <View>
+                <Text style={styles.textRedes}>Nossas Redes Sociais:</Text>
+              </View>
+              <View>
+                <View style={styles.imageRedes}>
+                  <Image source={facebook} style={styles.imgRodape} />
+                  <Text style={styles.textRedes}>Solutech Investments</Text>
+                </View>
+                <View style={styles.imageRedes}>
+                  <Image source={instagram} style={styles.imgRodape} />
+                  <Text style={styles.textRedes}>Solutech</Text>
+                </View>
+                <View style={styles.imageRedes}>
+                  <Image source={twitter} style={styles.imgRodape} />
+                  <Text style={styles.textRedes}>solutech_investments</Text>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
 
-    
+
       <StatusBar style="auto" />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
