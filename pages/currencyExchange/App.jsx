@@ -5,7 +5,7 @@ import Footer from '../../components/footer/App';
 
 
 
-export default function Moeda({ navigation }) {
+export default function CurrencyExchange({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
