@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { StatusBar, Image, StyleSheet, Text, View, Modal, TouchableOpacity, FlatList } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, Modal, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
 
@@ -54,7 +54,7 @@ export default function Home({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Menu navigation={navigation}/>
 
       <View style={styles.conteudo}>
@@ -96,33 +96,14 @@ export default function Home({ navigation }) {
         </View>
       </Modal>
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E8E9E4',
-  },
-  menu: {
-    alignItems: 'center',
-    marginBottom: '10%',
-  },
-  lista: {
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    width: '85%',
-    marginTop: -20,
-  },
-  topicos: {
-    color: '#797777',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
   },
   conteudo: {
     alignItems: 'center',
@@ -142,6 +123,7 @@ const styles = StyleSheet.create({
   },
   noticias: {
     marginTop: 20,
+    marginHorizontal: '2.8%',
   },
   noticiaContainer: {
     justifyContent: 'space-between',

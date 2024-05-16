@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
 
@@ -37,12 +37,12 @@ export default function Calculation({ navigation }) {
 
   
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Menu navigation={navigation}/>
 
       <View style={styles.conteudo}>
         <View style={styles.conteudoTitle}>
-          <Text style={styles.titulo}>Calcular Investimento</Text>
+          <Text style={styles.titulo}>CALCULAR INVESTIMENTO</Text>
           <Text style={styles.subtitulo}>Conheça nossa calculadora de investimento!</Text>
         </View>
         <View style={styles.conteudoInput}>
@@ -137,14 +137,13 @@ export default function Calculation({ navigation }) {
         <Footer />
       </View>
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E8E9E4',
   },
   conteudo: {

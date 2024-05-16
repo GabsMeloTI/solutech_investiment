@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
@@ -16,7 +16,7 @@ export default function InvestmentForm({ navigation }) {
   const [expectativaRetorno, setExpectativaRetorno] = useState('');
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Menu navigation={navigation}/>
 
       <View style={styles.conteudo}>
@@ -26,7 +26,6 @@ export default function InvestmentForm({ navigation }) {
         </View>
 
         <View style={styles.conteudoInput}>
-          {/* Objetivos Financeiros e Prazo */}
           <View style={styles.row}>
             <View style={styles.pickerContainer}>
               <Text style={styles.desInput}>Quais são seus principais objetivos financeiros?</Text>
@@ -56,7 +55,6 @@ export default function InvestmentForm({ navigation }) {
             </View>
           </View>
 
-          {/* Meta e Conhecimento */}
           <View style={styles.row}>
             <View style={styles.pickerContainer}>
               <Text style={styles.desInput}>Você tem uma meta específica de quanto gostaria de alcançar com seus investimentos?</Text>
@@ -84,7 +82,6 @@ export default function InvestmentForm({ navigation }) {
             </View>
           </View>
 
-          {/* Investimento anterior e Preferência de Risco */}
           <View style={styles.row}>
             <View style={styles.pickerContainer}>
               <Text style={styles.desInput}>Você já investiu em alguma coisa antes?</Text>
@@ -110,7 +107,6 @@ export default function InvestmentForm({ navigation }) {
             </View>
           </View>
 
-          {/* Fonte de Renda e Dinheiro Disponível */}
           <View style={styles.row}>
             <View style={styles.pickerContainer}>
               <Text style={styles.desInput}>Qual é a sua fonte principal de renda?</Text>
@@ -140,7 +136,6 @@ export default function InvestmentForm({ navigation }) {
             </View>
           </View>
 
-          {/* Expectativas de Retorno */}
           <View>
             <Text style={styles.desInput}>Qual é a sua expectativa de retorno anual para seus investimentos?</Text>
             <Picker
@@ -164,33 +159,14 @@ export default function InvestmentForm({ navigation }) {
       </View>
 
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E8E9E4',
-  },
-  menu: {
-    alignItems: 'center',
-    marginBottom: '6%',
-  },
-  lista: {
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    width: '85%',
-    marginTop: -20,
-  },
-  topicos: {
-    color: '#797777',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
   },
   conteudo: {
     alignItems: 'center',
@@ -253,37 +229,5 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 12,
     textAlign: 'center',
-  },
-  rodape: {
-    flexDirection: "column",
-    width: '100%',
-  },
-  conteudoRodape: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: "row",
-    width: '100%',
-    paddingHorizontal: '7%',
-  },
-  textRodape: {
-    width: 180,
-    fontSize: 12,
-  },
-  textRedes: {
-    fontSize: 12,
-    marginBottom: '10%',
-  },
-  imageRedes: {
-    flexDirection: "row",
-  },
-  linhaRodape: {
-    height: 2,
-    marginTop: '10%',
-    width: '100%',
-    marginBottom: '5%',
-  },
-  imgRodape: {
-    width: 17,
-    height: 17,
   },
 });

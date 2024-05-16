@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { StatusBar, Image, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
 
@@ -39,12 +39,12 @@ export default function SingIn({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Menu navigation={navigation}/>
 
       <View style={styles.conteudo}>
         <View style={styles.conteudoTitle}>
-          <Text style={styles.titulo}>Entrar</Text>
+          <Text style={styles.titulo}>ENTRAR</Text>
           <Text style={styles.subtitulo}>Ainda não tem conta em nossa plataforma?</Text>
           <Text style={styles.subtitulo}>Não perca tempo e
             <Text style={styles.span} onPress={() => { navigation.navigate('SingUp'); }}> cadastra-se </Text>
@@ -87,33 +87,14 @@ export default function SingIn({ navigation }) {
       </View>
 
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E8E9E4',
-  },
-  menu: {
-    alignItems: 'center',
-    marginBottom: '6%',
-  },
-  lista: {
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    width: '85%',
-    marginTop: -20,
-  },
-  topicos: {
-    color: '#797777',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
   },
   conteudo: {
     alignItems: 'center',
@@ -175,37 +156,5 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 12,
     textAlign: 'center',
-  },
-  rodape: {
-    flexDirection: "column",
-    width: '100%',
-  },
-  conteudoRodape: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: "row",
-    width: '100%',
-    paddingHorizontal: '7%',
-  },
-  textRodape: {
-    width: 180,
-    fontSize: 12,
-  },
-  textRedes: {
-    fontSize: 12,
-    marginBottom: '10%',
-  },
-  imageRedes: {
-    flexDirection: "row",
-  },
-  linhaRodape: {
-    height: 2,
-    marginTop: '10%',
-    width: '100%',
-    marginBottom: '5%',
-  },
-  imgRodape: {
-    width: 17,
-    height: 17,
   },
 });
