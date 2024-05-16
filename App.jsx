@@ -7,6 +7,7 @@ import SingUp from './pages/singUp/App.jsx';
 import InvestmentForm from './pages/investmentForm/App.jsx';
 import CurrencyExchange from './pages/currencyExchange/App.jsx';
 import Calculation from './pages/calculation/App.jsx';
+import AboutUs from './pages/aboutUs/App.jsx';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function AppNavigator() {
         <Stack.Screen name="InvestmentForm" component={InvestmentForm} />
         <Stack.Screen name="CurrencyExchange" component={CurrencyExchange} />
         <Stack.Screen name="Calculation" component={Calculation} />
+        <Stack.Screen name="AboutUs" component={AboutUs} />
       </Stack.Navigator>
     </NavigationContainer>
   );

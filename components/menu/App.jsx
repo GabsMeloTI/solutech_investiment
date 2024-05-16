@@ -12,9 +12,9 @@ export default function Menu({ navigation }) {
             </View>
             <View style={styles.lista}>
             <Text style={styles.topicos} onPress={() => { navigation.navigate('Home'); }}>Notícias</Text>
-            <Text style={styles.topicos} onPress={() => { navigation.navigate('Moeda'); }}>Moedas</Text>
+            <Text style={styles.topicos} onPress={() => { navigation.navigate('CurrencyExchange'); }}>Moedas</Text>
             <Text style={styles.topicos} onPress={() => { navigation.navigate('Calculation'); }}>Cálculos</Text>
-            <Text style={styles.topicos}>Sobre nós</Text>
+            <Text style={styles.topicos} onPress={() => { navigation.navigate('AboutUs'); }}>Sobre nós</Text>
             <Text style={styles.topicos} onPress={() => { navigation.navigate('SingIn'); }}>Entrar</Text>
             </View>
         </View>
