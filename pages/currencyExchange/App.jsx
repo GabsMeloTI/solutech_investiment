@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
-import { StatusBar, Image, StyleSheet, Text, View, ScrollView  } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
 
+const rodape = require('../../assets/linha-rodape.png');  
 
+export default function Moeda({ navigation }) {
+  const [valorReal, setValorReal] = useState('');
+  const [valorDolar, setValorDolar] = useState('');
 
-export default function CurrencyExchange({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const handleCambio = (valor) => {
+    setValorReal(valor);
+    const valorEmReal = parseFloat(valor);
+    if (!isNaN(valorEmReal)) {
+      const valorConvertido = (valorEmReal * 5.13).toFixed(2);
+      setValorDolar(valorConvertido);
+    } else {
+      setValorDolar('');
+    }
+  };
 
   const tableData = [
     { id: 1, moeda: 'Peso Argentino', compra: 0.0059, venda: 0.0059, var: 1.72 },
-    { id: 2, moeda: 'Dólar Australiano', compra: 3.305, venda: 3.31, var: -0.3252 },
+    { id: 2, moeda: 'Dólar AU', compra: 3.305, venda: 3.31, var: -0.3252 },
     { id: 3, moeda: 'Dólar Canadense', compra: 3.709, venda: 3.714, var: 0.6203 },
     { id: 4, moeda: 'Franco Suiço', compra: 0.4217, venda: 0.4218, var: -87 },
     { id: 5, moeda: 'Dólar Comercial', compra: 5.076, venda: 5.077, var: 1.41 },
@@ -22,8 +33,8 @@ export default function CurrencyExchange({ navigation }) {
   ];
 
   return (
-    <View style={styles.container}>
-      <Menu navigation={navigation}/>
+    <ScrollView style={styles.container}>
+      <Menu navigation={navigation} />
 
       <View style={styles.conteudo}>
         <View style={styles.conteudoTitle}>
@@ -35,14 +46,17 @@ export default function CurrencyExchange({ navigation }) {
           <ScrollView style={styles.containerTabela}>
             <View style={styles.table}>
               <View style={styles.tableRow}>
-                <Text style={[styles.tableCell, styles.tableHeader]}>Moeda</Text>
-                <Text style={[styles.tableCell, styles.tableHeader]}>Compra</Text>
-                <Text style={[styles.tableCell, styles.tableHeader]}>Venda</Text>
-                <Text style={[styles.tableCell, styles.tableHeader, styles.varHeader]}>VAR%</Text>
+                <Text style={styles.tableCellNameMoeda}>Moeda</Text>
+                <Text style={styles.tableCellName}>Compra</Text>
+                <Text style={styles.tableCellName}>Venda</Text>
+                <Text style={styles.tableCellName}>VAR%</Text>
+              </View>
+              <View>
+                <Image source={rodape} style={styles.linhaRodape} />
               </View>
               {tableData.map((item) => (
                 <View key={item.id} style={styles.tableRow}>
-                  <Text style={styles.tableCell}>{item.moeda}</Text>
+                  <Text style={styles.tableCellMoeda}>{item.moeda}</Text>
                   <Text style={styles.tableCell}>{item.compra}</Text>
                   <Text style={styles.tableCell}>{item.venda}</Text>
                   <Text style={[styles.tableCell, item.var >= 0 ? styles.varPositive : styles.varNegative]}>{item.var}</Text>
@@ -53,21 +67,43 @@ export default function CurrencyExchange({ navigation }) {
         </View>
 
         <View style={styles.inputMoedas}>
-          
+          <Text style={styles.tituloInput}>Conversor de Moedas</Text>
+          <View style={styles.inputConteudo}>
+            <Text style={styles.textValores}>Valores</Text>
+            <View style={styles.inputGeral}>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite o valor em real"
+                value={valorReal}
+                onChangeText={handleCambio}
+                keyboardType="numeric"
+              />
+              <Text style={styles.textInput}>Real</Text>
+            </View>
+
+            <View style={styles.inputGeral}>
+              <TextInput
+                placeholder="O resultado aparecerá aqui"
+                style={styles.input}
+                value={valorDolar}
+                editable={false}
+              />
+              <Text style={styles.textInput}>Dólar</Text>
+            </View>
+          </View>
         </View>
 
         <Footer />
       </View>
 
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E8E9E4',
   },
   menu: {
@@ -89,6 +125,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   conteudo: {
+    width: '100%',
     alignItems: 'center',
   },
   conteudoTitle: {
@@ -108,37 +145,49 @@ const styles = StyleSheet.create({
   },
   span: {
     color: '#E4A96A',
+  },  
+  linhaRodape: {
+    height: 2,
+    width: '100%',
+    marginBottom: '2%',
   },
-
+  tabelaMoedas: {
+    width: '80%',
+  },
   containerTabela: {
     width: '100%',
-    flex: 5,
-    padding: 16,
-    backgroundColor: '#fff',
   },
   table: {
     width: '100%',
-    borderWidth: 1,
-    borderColor: '#000',
   },
   tableRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tableCellName: {
+    flex: 5,
+    padding: 8,
+    textAlign: 'center',
+    fontSize: 12,
+  },
+  tableCellNameMoeda: {
+    flex: 5,
+    padding: 8,
+    textAlign: 'start',
+    fontSize: 12,
   },
   tableCell: {
     flex: 5,
     padding: 8,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#000',
     textAlign: 'center',
+    fontSize: 10,
   },
-  tableHeader: {
-    backgroundColor: '#f0f0f0',
-    fontWeight: 'bold',
-  },
-  varHeader: {
-    backgroundColor: '#f0f0f0',
-    fontWeight: 'bold',
+  tableCellMoeda: {
+    flex: 5,
+    padding: 8,
+    textAlign: 'start',
+    fontSize: 10,
   },
   varPositive: {
     color: 'green',
@@ -146,37 +195,51 @@ const styles = StyleSheet.create({
   varNegative: {
     color: 'red',
   },
-
-  rodape: {
-    flexDirection: "column",
+  inputMoedas: {
+    flexDirection: 'column',
     width: '100%',
+    alignItems: 'center',
+  }, 
+  tituloInput: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#797777',
+    marginTop: '8%',
+    marginBottom: '3%'
   },
-  conteudoRodape: {
+  inputConteudo: {
+    width: '76%',
+  },
+  inputGeral: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: "row",
-    width: '100%',
-    paddingHorizontal: '7%',
-  },
-  textRodape: {
-    width: 180,
-    fontSize: 12,
-  },
-  textRedes: {
-    fontSize: 12,
-    marginBottom: '10%',
-  },
-  imageRedes: {
-    flexDirection: "row",
-  },
-  linhaRodape: {
-    height: 2,
-    marginTop: '10%',
-    width: '100%',
     marginBottom: '5%',
   },
-  imgRodape: {
-    width: 17,
-    height: 17,
+  input: {
+    height: 35,
+    width: 220,
+    borderColor: '#20515E',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#E8E9E4',
   },
+  textValores: {
+    fontSize: 12,
+    color: '#E4A96A',
+    fontWeight: 'bold',
+    marginBottom: '3%',
+  },
+  textInput: {
+    width: '20%',
+    textAlign: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold',
+    color: '#797777',
+    borderColor: '#20515E',
+    borderWidth: 1,
+    padding: '2.8%',
+    borderRadius: 10,
+  }
 });
