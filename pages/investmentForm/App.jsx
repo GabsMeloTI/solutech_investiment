@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-const logo = require('../../assets/logo.png');
-const rodape = require('../../assets/linha-rodape.png');
-const instagram = require('../../assets/instagram.png');
-const facebook = require('../../assets/facebook.png');
-const twitter = require('../../assets/twitterX.png');
-
-
+import Menu from '../../components/menu/App';
+import Footer from '../../components/footer/App';
 
 export default function InvestmentForm({ navigation }) {
   const [objetivo, setObjetivo] = useState('');
@@ -22,16 +17,7 @@ export default function InvestmentForm({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.menu}>
-        <Image source={logo} style={styles.logo} />
-        <View style={styles.lista}>
-          <Text style={styles.topicos} onPress={() => navigation.navigate('Home')}>Notícias</Text>
-          <Text style={styles.topicos}>Moedas</Text>
-          <Text style={styles.topicos}>Cálculos</Text>
-          <Text style={styles.topicos}>Sobre nós</Text>
-          <Text style={styles.topicos} onPress={() => navigation.navigate('SingIn')}>Entrar</Text>
-        </View>
-      </View>
+      <Menu navigation={navigation}/>
 
       <View style={styles.conteudo}>
         <View style={styles.conteudoTitle}>
@@ -174,27 +160,7 @@ export default function InvestmentForm({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.rodape}>
-          <Image source={rodape} style={styles.linhaRodape} />
-          <View style={styles.conteudoRodape}>
-            <Text style={styles.textRodape}>Investir no mercado financeiro apresenta desafios, desde entender os produtos até gerenciar riscos. É crucial compreender as dificuldades dos investidores para melhorar suas experiências e resultados.</Text>
-            <View>
-              <Text style={styles.textRedes}>Nossas Redes Sociais:</Text>
-              <View style={styles.imageRedes}>
-                <Image source={facebook} style={styles.imgRodape} />
-                <Text style={styles.textRedes}>Solutech Investments</Text>
-              </View>
-              <View style={styles.imageRedes}>
-                <Image source={instagram} style={styles.imgRodape} />
-                <Text style={styles.textRedes}>Solutech</Text>
-              </View>
-              <View style={styles.imageRedes}>
-                <Image source={twitter} style={styles.imgRodape} />
-                <Text style={styles.textRedes}>solutech_investments</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        <Footer />
       </View>
 
       <StatusBar style="auto" />
