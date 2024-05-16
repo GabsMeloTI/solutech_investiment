@@ -67,7 +67,7 @@ export default function Home({ navigation }) {
             data={noticias}
             renderItem={renderItem}
             keyExtractor={item => item.id}
-            numColumns={2} // Alinha as notícias em duas colunas
+            numColumns={2} 
             columnWrapperStyle={styles.noticiaContainer}
           />
         </View>
