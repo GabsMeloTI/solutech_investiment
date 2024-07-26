@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
 
@@ -15,8 +15,15 @@ export default function CalculationResult({ route }) {
                     <Text style={styles.subtitulo}>Veja os resultados de nossa simulação</Text>
                 </View>
                 <View style={styles.resultado}>
-                    <Text style={styles.resultadoTexto}>Tipo de Investimento: {selectedInvestmentType}</Text>
-                    <Text style={styles.resultadoTexto}>Tipo de Taxa: {selectedFixedRateType}</Text>
+                    <View>
+                        <Text style={styles.resultadoTexto}>Tipo de Investimento:</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={selectedInvestmentType}
+                        />
+                        
+                    </View>
+                    <Text style={styles.resultadoTexto}>Tipo de Taxa:</Text>
                     <Text style={styles.resultadoTexto}>Investimento Inicial: R${investimentoInicial.toFixed(2)}</Text>
                     <Text style={styles.resultadoTexto}>Investimento Mensal: R${investimentoMensal.toFixed(2)}</Text>
                     <Text style={styles.resultadoTexto}>Prazo: {prazoInvestimento} anos</Text>
@@ -65,7 +72,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     resultadoTexto: {
-        fontSize: 16,
+        fontSize: 12,
         marginBottom: 10,
+        color: '#E4A96A',
+    },
+    input: {
+        height: 40,
+        width: 130,
+        borderColor: '#20515E',
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginBottom: 20,
+        backgroundColor: '#f2f2f2',
     },
 });
