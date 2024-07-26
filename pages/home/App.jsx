@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { StatusBar, Image, StyleSheet, Text, View, Modal, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, View, Modal, TouchableOpacity, FlatList } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
-
 
 const api = axios.create({
   baseURL: "https://solutech-fiap-default-rtdb.firebaseio.com/"
@@ -54,26 +53,24 @@ export default function Home({ navigation }) {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Menu navigation={navigation}/>
-
-      <View style={styles.conteudo}>
-        <View style={styles.conteudoTitle}>
-          <Text style={styles.titulo}>NOTÍCIAS DO DIA</Text>
-          <Text style={styles.subtitulo}>{formatDate(new Date())}</Text>
-        </View>
-        <View style={styles.noticias}>
-          <FlatList
-            data={noticias}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            numColumns={2} 
-            columnWrapperStyle={styles.noticiaContainer}
-          />
-        </View>
-
-        <Footer />
-      </View>
+    <View style={styles.container}>
+      <Menu navigation={navigation} />
+      <FlatList
+        data={noticias}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.noticiaContainer}
+        ListHeaderComponent={
+          <View style={styles.conteudo}>
+            <View style={styles.conteudoTitle}>
+              <Text style={styles.titulo}>NOTÍCIAS DO DIA</Text>
+              <Text style={styles.subtitulo}>{formatDate(new Date())}</Text>
+            </View>
+          </View>
+        }
+        ListFooterComponent={<Footer />}
+      />
 
       <Modal
         animationType="slide"
@@ -96,7 +93,7 @@ export default function Home({ navigation }) {
         </View>
       </Modal>
       <StatusBar style="auto" />
-    </ScrollView>
+    </View>
   );
 }
 
@@ -127,6 +124,7 @@ const styles = StyleSheet.create({
   },
   noticiaContainer: {
     justifyContent: 'space-between',
+    marginHorizontal: 20,
   },
   noticia: {
     marginBottom: 10,
