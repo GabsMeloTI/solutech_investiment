@@ -8,21 +8,24 @@ import InvestmentForm from './pages/investmentForm/App.jsx';
 import CurrencyExchange from './pages/currencyExchange/App.jsx';
 import Calculation from './pages/calculation/App.jsx';
 import AboutUs from './pages/aboutUs/App.jsx';
+import { UserProvider } from './components/dataUser/App.jsx';
 
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="SingIn" component={SingIn} />
-        <Stack.Screen name="SingUp" component={SingUp} />
-        <Stack.Screen name="InvestmentForm" component={InvestmentForm} />
-        <Stack.Screen name="CurrencyExchange" component={CurrencyExchange} />
-        <Stack.Screen name="Calculation" component={Calculation} />
-        <Stack.Screen name="AboutUs" component={AboutUs} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="SingIn" component={SingIn} />
+          <Stack.Screen name="SingUp" component={SingUp} />
+          <Stack.Screen name="InvestmentForm" component={InvestmentForm} />
+          <Stack.Screen name="CurrencyExchange" component={CurrencyExchange} />
+          <Stack.Screen name="Calculation" component={Calculation} />
+          <Stack.Screen name="AboutUs" component={AboutUs} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }

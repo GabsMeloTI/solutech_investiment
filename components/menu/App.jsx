@@ -1,24 +1,30 @@
-import React from 'react';
-import { StatusBar, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useContext } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { UserContext } from '../dataUser/App'; 
 
 const logo = require('../../assets/logo.png');
 
-
 export default function Menu({ navigation }) {
-    return(
-        <View style={styles.menu}>
-            <View>
-            <Image source={logo} style={styles.logo} />
-            </View>
-            <View style={styles.lista}>
-            <Text style={styles.topicos} onPress={() => { navigation.navigate('Home'); }}>Notícias</Text>
-            <Text style={styles.topicos} onPress={() => { navigation.navigate('CurrencyExchange'); }}>Moedas</Text>
-            <Text style={styles.topicos} onPress={() => { navigation.navigate('Calculation'); }}>Cálculos</Text>
-            <Text style={styles.topicos} onPress={() => { navigation.navigate('AboutUs'); }}>Sobre nós</Text>
-            <Text style={styles.topicos} onPress={() => { navigation.navigate('SingIn'); }}>Entrar</Text>
-            </View>
-        </View>
-    );
+  const { user } = useContext(UserContext); 
+
+  return(
+    <View style={styles.menu}>
+      <View>
+        <Image source={logo} style={styles.logo} />
+      </View>
+      <View style={styles.lista}>
+        <Text style={styles.topicos} onPress={() => { navigation.navigate('Home'); }}>Notícias</Text>
+        <Text style={styles.topicos} onPress={() => { navigation.navigate('CurrencyExchange'); }}>Moedas</Text>
+        <Text style={styles.topicos} onPress={() => { navigation.navigate('Calculation'); }}>Cálculos</Text>
+        <Text style={styles.topicos} onPress={() => { navigation.navigate('AboutUs'); }}>Sobre nós</Text>
+        {user ? (
+          <Text style={styles.topicos}>{user.nome}</Text> 
+        ) : (
+          <Text style={styles.topicos} onPress={() => { navigation.navigate('SingIn'); }}>Entrar</Text>
+        )}
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

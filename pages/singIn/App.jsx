@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { StatusBar, Image, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
+import { UserContext } from '../../components/dataUser/App'; 
 
 const api = axios.create({
   baseURL: "https://solutech-fiap-default-rtdb.firebaseio.com/"
@@ -11,6 +12,7 @@ const api = axios.create({
 export default function SingIn({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const { setUser } = useContext(UserContext); // Usar o contexto
 
   const login = async () => {
     try {
@@ -22,17 +24,16 @@ export default function SingIn({ navigation }) {
       for (const key in data) {
         if (data[key].email === email && data[key].senha === senha) {
           userFound = true;
+          setUser(data[key]); // Atualizar o estado do usuário logado
           alert("Login bem-sucedido!", `Bem-vindo, ${data[key].nome}!`);
           navigation.navigate('Home');
           break;
-        } else if (data[key].email != email && data[key].senha === senha) {
-          alert("Erro de login, o email está incorreto. Tente novamente.");
-        } else if (data[key].email === email && data[key].senha != senha) {
-          alert("Erro de login, a senha está incorreta. Tente novamente.");
         }
       }
 
-
+      if (!userFound) {
+        alert("Erro de login. Usuário não encontrado ou credenciais incorretas.");
+      }
     } catch (error) {
       alert("Erro", `Erro ao fazer login: ${error.message}`);
     }
@@ -90,6 +91,7 @@ export default function SingIn({ navigation }) {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
