@@ -65,6 +65,15 @@ export default function Calculation({ navigation }) {
             valorFinal += investimentoMensal * Math.pow(1 + taxaMensal, prazoMeses - i);
         }
 
+        let imposto = 0;
+        if (prazoInvestimento <= 1) imposto = 0.225;
+        else if (prazoInvestimento <= 2) imposto = 0.185;
+        else if (prazoInvestimento <= 3) imposto = 0.15;
+        else imposto = 0.15;
+
+        const impostoPago = valorFinal * imposto;
+        const valorFinalLiquido = valorFinal - impostoPago;
+
         navigation.navigate('calculationResult', {
             selectedInvestmentType,
             selectedFixedRateType,
@@ -72,7 +81,10 @@ export default function Calculation({ navigation }) {
             investimentoMensal,
             prazoInvestimento,
             rentabilidadeAnual: rentabilidade * 100,
-            valorFinal
+            valorFinal,
+            imposto,
+            impostoPago,
+            valorFinalLiquido
         });
     };
 
