@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Modal, Alert } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import functions from '@react-native-firebase/functions';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
-
-const api = axios.create({
-  baseURL: "https://solutech-fiap-default-rtdb.firebaseio.com/"
-});
 
 export default function SingUp({ navigation }) {
   const [usuario, setUsuario] = useState({
@@ -15,12 +13,62 @@ export default function SingUp({ navigation }) {
     senha: "",
   });
   const [confirmacao, setConfirmacao] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [userId, setUserId] = useState(null);
 
-  function cadastrar(usuario) {
-    api.post('/usuarios.json', usuario).then(alert("Cadastrado com sucesso! Seja bem-vindo " + usuario.nome)).catch((err) => {alert("Erro! " + err)});
-    navigation.navigate('Home');
-    console.log(usuario);
-  }
+  const gerarCodigo = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString(); // Gera um código de 6 dígitos
+  };
+
+  const handleSignUp = async () => {
+    if (usuario.senha === confirmacao) {
+      try {
+        const userCredential = await auth().createUserWithEmailAndPassword(usuario.email, usuario.senha);
+        await userCredential.user.updateProfile({ displayName: usuario.nome });
+        
+        const codigoVerificacao = gerarCodigo();
+
+        await firestore().collection('usuarios').doc(userCredential.user.uid).set({
+          nome: usuario.nome,
+          email: usuario.email,
+          codigoVerificacao,
+          verificado: false,
+        });
+
+        await functions().httpsCallable('sendVerificationCode')({
+          email: usuario.email,
+          code: codigoVerificacao,
+        });
+
+        setUserId(userCredential.user.uid);
+        setModalVisible(true);
+      } catch (error) {
+        console.error("Erro ao cadastrar: ", error);
+        alert("Erro ao cadastrar: " + error.message);
+      }
+    } else {
+      alert("As senhas não conferem! Tente novamente");
+    }
+  };
+
+  const verificarCodigo = async () => {
+    const userDoc = await firestore().collection('usuarios').doc(userId).get();
+
+    if (userDoc.exists) {
+      const { codigoVerificacao } = userDoc.data();
+      if (codigo === codigoVerificacao) {
+        await firestore().collection('usuarios').doc(userId).update({ verificado: true });
+        Alert.alert("Verificação", "Seu e-mail foi verificado com sucesso!");
+        setModalVisible(false);
+        navigation.navigate('Home');
+      } else {
+        Alert.alert("Erro", "Código incorreto. Tente novamente.");
+      }
+    } else {
+      Alert.alert("Erro", "Usuário não encontrado.");
+    }
+  };
 
   const handleChange = (name, value) => {
     setUsuario({
@@ -33,13 +81,6 @@ export default function SingUp({ navigation }) {
     setConfirmacao(value);
   };
 
-  const handleSignUp = () => {
-    if (usuario.senha === confirmacao) {
-      cadastrar(usuario);
-    } else {
-      alert("As senhas não conferem! Tente novamente");
-    }
-  };
 
   return (
     <ScrollView style={styles.container}>
@@ -109,6 +150,30 @@ export default function SingUp({ navigation }) {
 
 
       <StatusBar style="auto" />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Digite o código de verificação enviado para o seu e-mail:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Código de verificação"
+              value={codigo}
+              onChangeText={setCodigo}
+            />
+            <TouchableOpacity style={styles.botao} onPress={verificarCodigo}>
+              <Text style={styles.textoBotao}>Verificar Código</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.cancelText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
