@@ -13,12 +13,13 @@ export default function SingUp({ navigation }) {
     nome: "",
     email: "",
     senha: "",
+    cpf: "",
   });
   const [confirmacao, setConfirmacao] = useState("");
 
   function cadastrar(usuario) {
     api.post('/usuarios.json', usuario).then(alert("Cadastrado com sucesso! Seja bem-vindo " + usuario.nome)).catch((err) => {alert("Erro! " + err)});
-    navigation.navigate('Home');
+    navigation.navigate('SingIn');
     console.log(usuario);
   }
 
@@ -64,9 +65,18 @@ export default function SingUp({ navigation }) {
               <Text style={styles.desInput}>Nome:</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Digite seu nome"
+                placeholder="Digite seu nome completo"
                 value={usuario.nome}
                 onChangeText={(text) => handleChange('nome', text)}
+              />
+            </View>
+            <View>
+              <Text style={styles.desInput}>CPF:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite seu CPF"
+                value={usuario.cpf}
+                onChangeText={(text) => handleChange('cpf', text)}
               />
             </View>
             <View>
