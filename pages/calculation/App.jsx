@@ -44,15 +44,15 @@ export default function Calculation({ navigation }) {
 
         if (selectedInvestmentType === 'Tesouro') {
             if (selectedFixedRateType === 'Pré') rentabilidade = 0.08;
-            else if (selectedFixedRateType === 'Pós') rentabilidade = 0.06 + 0.02; // 2% Selic simulada
+            else if (selectedFixedRateType === 'Pós') rentabilidade = 0.06 + 0.02; 
             else if (selectedFixedRateType === 'IPCA') rentabilidade = 0.04;
         } else if (selectedInvestmentType === 'LCI/LCA') {
             if (selectedFixedRateType === 'Pré') rentabilidade = 0.07;
-            else if (selectedFixedRateType === 'Pós') rentabilidade = 0.05 + 0.02; // 2% Selic simulada
+            else if (selectedFixedRateType === 'Pós') rentabilidade = 0.05 + 0.02; 
             else if (selectedFixedRateType === 'IPCA') rentabilidade = 0.03;
         } else if (selectedInvestmentType === 'CDB/LC') {
             if (selectedFixedRateType === 'Pré') rentabilidade = 0.09;
-            else if (selectedFixedRateType === 'Pós') rentabilidade = 0.07 + 0.02; // 2% Selic simulada
+            else if (selectedFixedRateType === 'Pós') rentabilidade = 0.07 + 0.02; 
             else if (selectedFixedRateType === 'IPCA') rentabilidade = 0.05;
         }
 

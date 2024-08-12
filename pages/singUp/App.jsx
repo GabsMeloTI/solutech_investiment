@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { StatusBar, Image, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Modal, Alert } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import functions from '@react-native-firebase/functions';
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
-
-const api = axios.create({
-  baseURL: "https://solutech-fiap-default-rtdb.firebaseio.com/"
-});
 
 export default function SingUp({ navigation }) {
   const [usuario, setUsuario] = useState({
@@ -19,7 +17,7 @@ export default function SingUp({ navigation }) {
 
   function cadastrar(usuario) {
     api.post('/usuarios.json', usuario).then(alert("Cadastrado com sucesso! Seja bem-vindo " + usuario.nome)).catch((err) => {alert("Erro! " + err)});
-    navigation.navigate('SingIn');
+    navigation.navigate('Home');
     console.log(usuario);
   }
 
@@ -34,13 +32,6 @@ export default function SingUp({ navigation }) {
     setConfirmacao(value);
   };
 
-  const handleSignUp = () => {
-    if (usuario.senha === confirmacao) {
-      cadastrar(usuario);
-    } else {
-      alert("As senhas não conferem! Tente novamente");
-    }
-  };
 
   return (
     <ScrollView style={styles.container}>
@@ -119,6 +110,30 @@ export default function SingUp({ navigation }) {
 
 
       <StatusBar style="auto" />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Digite o código de verificação enviado para o seu e-mail:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Código de verificação"
+              value={codigo}
+              onChangeText={setCodigo}
+            />
+            <TouchableOpacity style={styles.botao} onPress={verificarCodigo}>
+              <Text style={styles.textoBotao}>Verificar Código</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.cancelText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
