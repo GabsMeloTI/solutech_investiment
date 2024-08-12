@@ -18,7 +18,7 @@ export default function Menu({ navigation }) {
         <Text style={styles.topicos} onPress={() => { navigation.navigate('Calculation'); }}>Cálculos</Text>
         <Text style={styles.topicos} onPress={() => { navigation.navigate('AboutUs'); }}>Sobre nós</Text>
         {user ? (
-          <Text style={styles.topicos}>{user.nome}</Text> 
+          <Text style={styles.topicos} onPress={() => { navigation.navigate('EditUser'); }}>{user.nome}</Text> 
         ) : (
           <Text style={styles.topicos} onPress={() => { navigation.navigate('SingIn'); }}>Entrar</Text>
         )}
