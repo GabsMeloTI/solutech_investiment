@@ -74,7 +74,7 @@ export default function Calculation({ navigation }) {
         const impostoPago = valorFinal * imposto;
         const valorFinalLiquido = valorFinal - impostoPago;
 
-        navigation.navigate('calculationResult', {
+        navigation.navigate('CalculationResult', {
             selectedInvestmentType,
             selectedFixedRateType,
             investimentoInicial,
