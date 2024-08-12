@@ -3,7 +3,7 @@ import { StatusBar, StyleSheet, Text, View, ScrollView, TextInput } from 'react-
 import Menu from '../../components/menu/App';
 import Footer from '../../components/footer/App';
 
-export default function ResultadoInvestimento({ route, navigation }) {
+export default function CalculationResult({ route, navigation }) {
     const { selectedInvestmentType, selectedFixedRateType, investimentoInicial, investimentoMensal, prazoInvestimento, rentabilidadeAnual, valorFinal, imposto } = route.params;
     const rentabilidade = rentabilidadeAnual + 100;
     const totalMeses = prazoInvestimento * 12;
