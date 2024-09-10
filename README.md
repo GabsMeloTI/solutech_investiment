@@ -2,6 +2,16 @@
 
 Welcome to **Solutech**, an innovative investment platform designed to revolutionize how individuals of all experience levels manage their investments. Our mission is to empower clients, from beginners to seasoned investors, with tools and insights that help them make informed financial decisions and achieve their long-term goals.
 
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technologies](#technologies)
+- [Prerequisites](#prerequisites)
+- [Setup & Installation](#setup--installation)
+- [Firebase Configuration](#firebase-configuration)
+- [Docker Setup](#docker-setup)
+
 ## 📈 Project Overview
 
 **Solutech** aims to support clients throughout their entire investment journey. Our platform not only facilitates portfolio tracking but also provides valuable insights into market trends. All of this is delivered through a user-friendly and accessible interface.
@@ -56,11 +66,10 @@ Before you begin, ensure you have the following installed:
     npx react-native run-ios
     ```
 
-## 🔧 Firebase Configuration
+🔧 Firebase Configuration
+Create a `firebaseConfig.js` file in your project directory with the following content:
 
-Create a `firebaseConfig.js` file with the following content:
-
-```javascript
+```js
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -79,3 +88,32 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 export { db, auth };
+```
+
+🐳 Docker Setup
+To containerize the application, follow these steps:
+
+**Dockerfile**
+
+```dockerfile
+# Use an official Node.js runtime as a parent image
+FROM node:14
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose port
+EXPOSE 8080
+
+# Run the application
+CMD ["npm", "start"]
+
