@@ -90,30 +90,56 @@ const auth = getAuth(app);
 export { db, auth };
 ```
 
-🐳 Docker Setup
+## 🐳 Docker Setup
+
 To containerize the application, follow these steps:
 
-**Dockerfile**
+1. **Create a Dockerfile**:
 
-```dockerfile
-# Use an official Node.js runtime as a parent image
-FROM node:14
+    ```dockerfile
+    # Use an official Node.js runtime as a parent image
+    FROM node:14
 
-# Set the working directory
-WORKDIR /app
+    # Set the working directory
+    WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+    # Copy package.json and package-lock.json
+    COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+    # Install dependencies
+    RUN npm install
 
-# Copy the rest of the application code
-COPY . .
+    # Copy the rest of the application code
+    COPY . .
 
-# Expose port
-EXPOSE 8080
+    # Expose port
+    EXPOSE 8080
 
-# Run the application
-CMD ["npm", "start"]
+    # Run the application
+    CMD ["npm", "start"]
+    ```
 
+2. **Create a `docker-compose.yml` file**:
+
+    ```yaml
+    version: '3'
+    services:
+      app:
+        build: .
+        ports:
+          - "8080:8080"
+        volumes:
+          - .:/app
+        environment:
+          - NODE_ENV=development
+    ```
+
+3. **Build and start the Docker containers**:
+
+    ```bash
+    docker-compose up --build
+    ```
+
+4. **Access the application**:
+
+    The application should be accessible at [http://localhost:8080](http://localhost:8080). If you encounter issues, ensure that Docker is correctly forwarding the port and that there are no conflicts with other services on your machine.
