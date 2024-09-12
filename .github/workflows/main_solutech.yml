@@ -21,17 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Remover o passo de build, já que o Expo pode rodar diretamente na web
+      - name: Install FTP client
+        run: sudo apt-get install -y lftp
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'solutech'
-          slot-name: 'Production'
-          package: '.'  # Subir todos os arquivos do projeto
+      - name: Deploy to Azure Web App via FTP
+        run: |
+          lftp -u solutech\$solutech,uBtP4ZEC0uuYq4T9iPajJMvsCdaXunigEN1hGm46ovCi55f8o9zLQv4xdqTq -e "mirror --reverse --delete --verbose ./ /site/wwwroot; quit" ftps://waws-prod-cq1-039.ftp.azurewebsites.windows.net
