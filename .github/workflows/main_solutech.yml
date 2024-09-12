@@ -24,16 +24,12 @@ jobs:
       # Remover o passo de build, já que o Expo pode rodar diretamente na web
 
       - name: Login to Azure
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4967335E544540AEAA4AB118678375B7 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E18BB87944F047DFB65C6D1E153E8710 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5E685619D7BE44A9AF703D9A1874D1A5 }}
-
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
         with:
           app-name: 'solutech'
           slot-name: 'Production'
