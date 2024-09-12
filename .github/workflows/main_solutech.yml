@@ -30,4 +30,4 @@ jobs:
           FTP_USER: solutech\$solutech
           FTP_PASS: uBtP4ZEC0uuYq4T9iPajJMvsCdaXunigEN1hGm46ovCi55f8o9zLQv4xdqTq
         run: |
-          lftp -u "$FTP_USER","$FTP_PASS" -e "mirror --reverse --delete --verbose ./ /site/wwwroot; quit" "$FTP_URL"
+          lftp -u "$FTP_USER","$FTP_PASS" -e "mirror --reverse --verbose ./ /site/wwwroot; quit" "$FTP_URL"
