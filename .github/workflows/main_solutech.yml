@@ -26,4 +26,4 @@ jobs:
 
       - name: Deploy to Azure Web App via FTP
         run: |
-          lftp -u solutech\$solutech,uBtP4ZEC0uuYq4T9iPajJMvsCdaXunigEN1hGm46ovCi55f8o9zLQv4xdqTq -e "mirror --reverse --delete --verbose ./ /site/wwwroot; quit" ftps://waws-prod-cq1-039.ftp.azurewebsites.windows.net
+          lftp -u 'solutech$solutech',uBtP4ZEC0uuYq4T9iPajJMvsCdaXunigEN1hGm46ovCi55f8o9zLQv4xdqTq' -e "mirror --reverse --delete --verbose ./ /site/wwwroot; quit" ftps://waws-prod-cq1-039.ftp.azurewebsites.windows.net
